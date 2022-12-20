@@ -7,6 +7,8 @@ import Col from "react-bootstrap/Col";
 import Image from 'react-bootstrap/Image'
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
+import jsCookie from 'js-cookie';
+import { Navigate } from 'react-router-dom';
 
 function UserAccountPage(props){
   const linkStyle = {
@@ -14,6 +16,10 @@ function UserAccountPage(props){
     textDecoration: "none",
     color: 'white'
   };
+
+  if (!jsCookie.get('userID')){
+    return <Navigate replace to ='/user/login'></Navigate>
+    } else {
     return(
         <Container fluid>
         <Container fluid>
@@ -43,6 +49,6 @@ function UserAccountPage(props){
 </Row>
 </Container>
         </Container>
-    )
+    )}
     }
 export default UserAccountPage;

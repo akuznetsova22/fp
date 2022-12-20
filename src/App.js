@@ -14,12 +14,15 @@ import WishlistPage from './components/WishlistPage';
 import UserAccountPage from './components/UserAccountPage';
 import ChangeUserDetailsPage from './components/ChangeUserDetailsPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Top from './components/Top';
 import Copyright from './components/Copyright';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
+import Cookies from 'js-cookie';
 
 function App() {
+
   return (
     <div className="App">
        <Router>
@@ -35,7 +38,7 @@ function App() {
           <Route path="/user/register" element={<Register/>} />
           <Route path="/user/login/forgotpwd" element={<ForgotPwdPage/>} />
           <Route path="/user/login/forgotpwd/changepwd" element={<ChangePwdPage/>} />
-          <Route path="/user/account" element={<UserAccountPage/>} />
+          <Route path="/user/account" element={ <UserAccountPage/>} />
           <Route path="/user/wishlist" element={<WishlistPage/>} />
           <Route path="/user/shoppingcart" element={<OrderPage/>} />
           <Route path="/user/changedetails" element={<ChangeUserDetailsPage/>} />
