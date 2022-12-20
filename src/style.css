@@ -1,0 +1,33 @@
+*{
+    font-family: fantasy;
+}
+html{
+    padding: 2%;
+    background-color: rgb(138, 189, 191);
+}
+body{
+  background-color: rgb(213, 237, 241);
+  padding-bottom: 1%;
+
+}
+h1, h2, h3{
+    padding:20px;
+    text-align:center
+}
+img{
+    height:50vh;
+    width:100%;
+}
+p{
+    height:20vh;
+}
+#carouselExampleControls {
+  margin-top: 10px;
+}
+h2{
+    padding-top: 3%;
+    padding-bottom: 2%;
+}
+#copyright{
+    margin-top:2%
+}
