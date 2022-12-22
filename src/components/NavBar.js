@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 function NavBar(props){
     return(
         <Navbar bg="light" expand="lg">
-      <Container>
+        <Container>
         <Navbar.Brand><Link className='nav-link' to="/">Home </Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -25,10 +25,10 @@ function NavBar(props){
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/user/account"> My account</NavDropdown.Item>
             </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            </Nav>
+          </Navbar.Collapse>
+          </Container>
+        </Navbar>
     )
 }
 export default NavBar;

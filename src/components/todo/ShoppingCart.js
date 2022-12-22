@@ -1,4 +1,4 @@
-import ProductList from "./ProductList.js";
+import ProductList from "../ProductList.js";
 
 function ShoppingCart(props){
     const products = props.products;

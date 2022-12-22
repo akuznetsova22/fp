@@ -18,8 +18,7 @@ function LoseWeightPage(props){
             <Card.Title>I need a detox! Menu</Card.Title>
             <Card.Img variant="top" src={require('../images/smoothies.jpg')} />
             <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+                Collection of smoothies and greens carefully selected by our nutrisionists are exactly what you need to feel light and release all that daily stress
             </Card.Text>
             <ListGroup variant="flush">
                 <ListGroup.Item>$35 per day</ListGroup.Item>
@@ -45,8 +44,7 @@ function LoseWeightPage(props){
             <Card.Title>Sweet tooth menu</Card.Title>
             <Card.Img variant="top" src={require('../images/SweetMenu.jpg')} />
             <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+                Think you need to cut all the sweets and eat nothing but boring broccoli to lose weight? You cannot be more wrong! We will show you that healthy treats taste even better!
             </Card.Text>
             <ListGroup variant="flush">
                 <ListGroup.Item>$50 per day</ListGroup.Item>
@@ -72,8 +70,7 @@ function LoseWeightPage(props){
             <Card.Title>No time to lose Menu</Card.Title>
             <Card.Img variant="top" src={require('../images/expressMenu.jpg')} />
             <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+                Got a wedding coming in a few month? Big vacation on the beach? Need results fast? We got you. Our team made sure to provide a safe express menu that will help you shread those cm fast.
             </Card.Text>
             <ListGroup variant="flush">
                 <ListGroup.Item>$45 per day</ListGroup.Item>

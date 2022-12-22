@@ -1,4 +1,3 @@
-
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,11 +6,6 @@ import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 
 function CategoryPage(props){
-    const linkStyle = {
-        margin: "1rem",
-        textDecoration: "none",
-        color: 'white'
-      };
     return(
         <Container fluid>
         <h2>Select what suits your goals best:</h2>
@@ -23,12 +17,11 @@ function CategoryPage(props){
             <Card.Title>Lose weight</Card.Title>
             <Card.Img variant="top" src={require('../images/loseWeight.jpg')} />
             <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+                Our nutricionists created variety of menues to help you lose weight without harming your health. We provide healthy foods that tastes like that delicious unhealthy treats. Try it yourself! 
             </Card.Text>
-            <Button variant="primary" type="submit"><Link style={linkStyle} to='/category/loseweight/menus'
->       Explore options </Link>
-      </Button>
+            <Button variant="primary" type="submit"><Link to='/category/loseweight/menus'
+            >Explore options </Link>
+            </Button>
         </Card.Body>
         </Card>
         </Col>
@@ -38,12 +31,11 @@ function CategoryPage(props){
             <Card.Title>Build Muscles</Card.Title>
             <Card.Img variant="top" src={require('../images/buildMuscle.jpg')} />
             <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+                Our selection of menus will help you getting those muscles growing. Each menu group offers at least 100gr of protein per day.
             </Card.Text>
-            <Button variant="primary" type="submit"><Link style={linkStyle} to='/category/buildmuscle/menus'
->       Explore options </Link>
-      </Button>
+            <Button variant="primary" type="submit"><Link to='/category/buildmuscle/menus'
+            >Explore options </Link>
+            </Button>
         </Card.Body>
         </Card>
         </Col>
@@ -53,12 +45,11 @@ function CategoryPage(props){
             <Card.Title>I hate cooking</Card.Title>
             <Card.Img variant="top" src={require('../images/lazy.jpg')} />
             <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+                Hate spending hours preparing your food? We got you! Full daily menus are prepared by our chefs and are waiting for you. PS. now you dont need to care about washing dishes either
             </Card.Text>
-            <Button variant="primary" type="submit"><Link style={linkStyle} to='/category/lazy/menus'
->       Explore options </Link>
-      </Button>
+            <Button variant="primary" type="submit"><Link to='/category/lazy/menus'
+            >Explore options </Link>
+            </Button>
         </Card.Body>
         </Card>
         </Col>

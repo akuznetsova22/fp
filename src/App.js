@@ -14,12 +14,10 @@ import WishlistPage from './components/WishlistPage';
 import UserAccountPage from './components/UserAccountPage';
 import ChangeUserDetailsPage from './components/ChangeUserDetailsPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 import Top from './components/Top';
 import Copyright from './components/Copyright';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-import Cookies from 'js-cookie';
 
 function App() {
 
