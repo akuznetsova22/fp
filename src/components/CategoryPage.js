@@ -19,7 +19,7 @@ function CategoryPage(props){
             <Card.Text>
                 Our nutricionists created variety of menues to help you lose weight without harming your health. We provide healthy foods that tastes like that delicious unhealthy treats. Try it yourself! 
             </Card.Text>
-            <Button variant="primary" type="submit"><Link to='/category/loseweight/menus'
+            <Button variant="outline-primary" type="submit"><Link to='/category/loseweight/menus'
             >Explore options </Link>
             </Button>
         </Card.Body>
@@ -33,7 +33,7 @@ function CategoryPage(props){
             <Card.Text>
                 Our selection of menus will help you getting those muscles growing. Each menu group offers at least 100gr of protein per day.
             </Card.Text>
-            <Button variant="primary" type="submit"><Link to='/category/buildmuscle/menus'
+            <Button variant="outline-primary" type="submit"><Link to='/category/buildmuscle/menus'
             >Explore options </Link>
             </Button>
         </Card.Body>
@@ -47,7 +47,7 @@ function CategoryPage(props){
             <Card.Text>
                 Hate spending hours preparing your food? We got you! Full daily menus are prepared by our chefs and are waiting for you. PS. now you dont need to care about washing dishes either
             </Card.Text>
-            <Button variant="primary" type="submit"><Link to='/category/lazy/menus'
+            <Button variant="outline-primary" type="submit"><Link to='/category/lazy/menus'
             >Explore options </Link>
             </Button>
         </Card.Body>

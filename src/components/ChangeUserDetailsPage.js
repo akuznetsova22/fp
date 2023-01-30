@@ -1,59 +1,60 @@
 import { Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import Axios from 'axios';
-
+import API from "../api/api.js";
 
 function ChangeAddressPage(props){
     const [newAddress, setNewAddress] = useState('');
     const [newImg, setImg] = useState('');
     const [userId, setUserId] = useState('');
+    const [saved, setSaved] = useState(false);
+    const [address, setAddress] = useState('');
     const navigate = useNavigate();
     
+    useEffect(() => { 
+      getSessionInfo();
+    },[]);
+
     function changeAddress(){
-        return Axios.post('http://localhost:3001/user/change_address',{
-          id: userId,
-          address: newAddress
-        })
+      setAddress(newAddress)
+      const api = new API();
+      api.changeAddress(userId, newAddress)
     }
     function changeImg(){
-      return Axios.post('http://localhost:3001/user/change_img',{
-        id: userId,
-        imgSource: newImg
+      setImg(newImg)
+      setAddress(newAddress)
+      const api = new API();
+      api.changeImg(userId, newImg)
+  }
+    function getSessionInfo(){
+      const api = new API();
+      api.checkLogin()
+      .then((response) => {
+          setUserId(response.data.user[0].id);
       })
   }
-  function getSessionInfo(){
-    Axios.get('http://localhost:3001/user/login')
-    .then((response) => {
-        setUserId(response.data.user[0].id);
-    })
-}
-  function goBack(e){
-    e.preventDefault();
-    navigate('/user/account')
-}
+    function goBack(e){
+      e.preventDefault();
+      navigate('/user/account')
 
-
+  }
     const handleSubmit = (event) => {
       event.preventDefault();
-      const form = event.currentTarget;
-      // if (form.checkValidity() === false) {
-      //   event.preventDefault();
-      //   event.stopPropagation();
-      // }
+      // const form = event.currentTarget;
       if (newAddress){
         changeAddress()
       }
       if (newImg){
         changeImg()
       }
-      alert('Changes saved!')
-      getSessionInfo();
-
+      setSaved(true)
     };
-    getSessionInfo();
+
+    if (saved) {
+      navigate('/user/account')
+    } else {
     return (
         <Container fluid>
         <h2>Change address:</h2>
@@ -86,5 +87,6 @@ function ChangeAddressPage(props){
         </Form>
         </Container>
     )
+  }
 }
 export default ChangeAddressPage;

@@ -1,14 +1,18 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState ,useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import { Container } from 'react-bootstrap';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API from "../api/api.js";
+import { LogginContext } from "./LoginContext";
 
 function Register() {
+  const api = new API();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const {setLoggedIn} = useContext(LogginContext);
   const [validated, setValidated] = useState(false);
   const [firstNameReg, setFirstName] = useState('');
   const [lastNameReg, setLastName] = useState('');
@@ -16,33 +20,13 @@ function Register() {
   const [passwordReg, setPassword] = useState('');
   const [addressReg, setAddress] = useState('');
   const [imgSourceReg, setImgSource] = useState(null);
-  // const [isRegistered,setIsRegistered] = useState(false);
   const [allowLogin, setAllowLogin] = useState(false);
   const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const [userID, setUserId] = useState('');
   const [loginStatus,setLoginStatus] = useState('');
   const navigate = useNavigate();
 
-  Axios.defaults.withCredentials = true;
 
-  // useEffect(() => {
-  //   if (isLoggedIn){
-  //     // setUserCookie();
-  //     // console.log(userID)
-  //     // jsCookie.set('userLoggedIn',userID);
-  //     navigate('/user/login')
-  //   }
-  // },[isLoggedIn])
- function register(){
-   return Axios.post('http://localhost:3001/user/register',{
-    firstName: firstNameReg,
-    lastName: lastNameReg,
-    email: emailReg,
-    password: passwordReg,
-    address: addressReg,
-    imgSource: imgSourceReg
-  })
-}
+
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -50,20 +34,20 @@ function Register() {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }
-    // setUserCookie()
-    register().then((response) => {
-      if (response.data.message){
-        setLoginStatus(response.data.message)
-      } else {
-        // console.log(response)
-        setLoginStatus(response.data[0].email)
-        setAllowLogin(true);
-        setIsLoggedIn(true);
-      }
-
-    });;
-    navigate('/user/login')
-
+    setValidated(true)
+    if(validated){
+      api.register(firstNameReg,lastNameReg, emailReg, passwordReg, addressReg, imgSourceReg)
+      .then((response) => {
+        if (response.data.message){
+          setLoginStatus(response.data.message)
+        } else {
+          setLoginStatus(response.data[0].email)
+          setAllowLogin(true);
+          setLoggedIn(true);
+        }
+      });
+      navigate('/user/login')
+    }
   };
   
     return (
@@ -104,7 +88,7 @@ function Register() {
               <Form.Group as={Col} md="4" controlId="validationCustomEmail">
                 <Form.Label>Email</Form.Label>
                 <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                  <InputGroup.Text>@</InputGroup.Text>
                   <Form.Control
                     type="email"
                     placeholder="Email"

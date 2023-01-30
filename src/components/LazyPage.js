@@ -4,8 +4,40 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
+import API from "../api/api.js";
+import {useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 function LazyPage(props){
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const navigate=useNavigate();
+    const api = new API();
+
+    api.checkLogin().then((response) => {
+      if (response.data.userLoggedIn) {
+        setUserLoggedIn(true);
+      }
+    });
+    async function addOrder(e){
+        if (!userLoggedIn){
+            navigate('/user/login')
+        } else {
+            await api.addOrder(e.target.value);
+            alert('Product added to your shopping cart!')
+        }
+    };
+
+    async function addWishlist(e){
+        if (!userLoggedIn){
+            navigate('/user/login')
+        } else {
+            await api.addWishlist(e.target.value);
+            alert('Product added to your wishlist!')
+        }
+    };
+
+
     return(
         <Container fluid>
         <h2>I hate cooking - Select your menu:</h2>
@@ -27,10 +59,10 @@ function LazyPage(props){
             <Container fluid>
                 <Row>
                     <Col md-6>
-                    <Button variant="primary">Add to Cart</Button>
+                    <Button variant="primary" value='Carb me up! Menu' onClick={addOrder}>Add to Cart</Button>
                     </Col>
                     <Col md-6>
-                    <Button variant="secondary">Save for later</Button>
+                    <Button variant="secondary" value='Carb me up! Menu' onClick={addWishlist}>Save for later</Button>
                     </Col>
                 </Row>
             </Container>
@@ -53,10 +85,10 @@ function LazyPage(props){
             <Container fluid>
                 <Row>
                     <Col md-6>
-                    <Button variant="primary">Add to Cart</Button>
+                    <Button variant="primary" value='Gastronomic tour Menu' onClick={addOrder}>Add to Cart</Button>
                     </Col>
                     <Col md-6>
-                    <Button variant="secondary">Save for later</Button>
+                    <Button variant="secondary" value='Gastronomic tour Menu' onClick={addWishlist}>Save for later</Button>
                     </Col>
                 </Row>
             </Container>
@@ -79,10 +111,10 @@ function LazyPage(props){
             <Container fluid>
                 <Row>
                     <Col md-6>
-                    <Button variant="primary">Add to Cart</Button>
+                    <Button variant="primary" value='Surprise Menu' onClick={addOrder}>Add to Cart</Button>
                     </Col>
                     <Col md-6>
-                    <Button variant="secondary">Save for later</Button>
+                    <Button variant="secondary" value='Surprise Menu' onClick={addWishlist}>Save for later</Button>
                     </Col>
                 </Row>
             </Container>

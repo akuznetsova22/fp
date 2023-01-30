@@ -4,8 +4,38 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
+import API from "../api/api.js";
+import {useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function BuildMusclesPage(props){
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const navigate=useNavigate();
+    const api = new API();
+
+    api.checkLogin().then((response) => {
+      if (response.data.userLoggedIn) {
+        setUserLoggedIn(true);
+      }
+    });
+    async function addOrder(e){
+        if (!userLoggedIn){
+            navigate('/user/login')
+        } else {
+            await api.addOrder(e.target.value);
+            alert('Product added to your shopping cart!')
+        }
+    };
+
+    async function addWishlist(e){
+        if (!userLoggedIn){
+            navigate('/user/login')
+        } else {
+            await api.addWishlist(e.target.value);
+            alert('Product added to your wishlist!')
+        }
+    };
+
     return(
         <Container fluid>
         <h2>Build muscles goal - Select your menu:</h2>
@@ -27,10 +57,10 @@ function BuildMusclesPage(props){
                 <Container fluid>
                     <Row>
                         <Col md-6>
-                        <Button variant="primary">Add to Cart</Button>
+                        <Button variant="primary" value='Give me greens Menu' onClick={addOrder}>Add to Cart</Button>
                         </Col>
                         <Col md-6>
-                        <Button variant="secondary">Save for later</Button>
+                        <Button variant="secondary" value='Give me greens Menu' onClick={addWishlist}>Save for later</Button>
                         </Col>
                     </Row>
                 </Container>
@@ -43,7 +73,7 @@ function BuildMusclesPage(props){
                 <Card.Title>Protein beast Menu</Card.Title>
                 <Card.Img variant="top" src={require('../images/Protein.jpg')} />
                 <Card.Text>
-                    Rich in protein we offer perfectly balanced meals with at least 130gr of protein per day. With us your can forget about difficult food choices and counting the PFC and concentrate on your workouts
+                    Rich in protein. We offer perfectly balanced meals with at least 130gr of protein per day. With us your can forget about difficult food choices and counting the PFC and concentrate on your workouts
                 </Card.Text>
                 <ListGroup variant="flush">
                     <ListGroup.Item>$55 per day</ListGroup.Item>
@@ -53,10 +83,10 @@ function BuildMusclesPage(props){
                 <Container fluid>
                     <Row>
                         <Col md-6>
-                        <Button variant="primary">Add to Cart</Button>
+                        <Button variant="primary" value='Protein beast Menu' onClick={addOrder}>Add to Cart</Button>
                         </Col>
                         <Col md-6>
-                        <Button variant="secondary">Save for later</Button>
+                        <Button variant="secondary" value='Protein beast Menu' onClick={addWishlist}>Save for later</Button>
                         </Col>
                     </Row>
                 </Container>
@@ -79,10 +109,10 @@ function BuildMusclesPage(props){
                 <Container fluid>
                     <Row>
                         <Col md-6>
-                        <Button variant="primary">Add to Cart</Button>
+                        <Button variant="primary" value='Beyond food Menu' onClick={addOrder}>Add to Cart</Button>
                         </Col>
                         <Col md-6>
-                        <Button variant="secondary">Save for later</Button>
+                        <Button variant="secondary" value='Beyond food Menu' onClick={addWishlist}>Save for later</Button>
                         </Col>
                     </Row>
                 </Container>

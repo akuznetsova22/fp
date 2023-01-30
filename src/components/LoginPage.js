@@ -5,55 +5,40 @@ import React, { useState,useEffect } from 'react';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Link, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import Axios from 'axios';
-import jsCookie from "js-cookie";
-// import IsLoggedIn from "./IsLogged.js";
-
-
+import API from "../api/api.js";
+import { LogginContext } from "./LoginContext";
+import { useContext } from "react";
 
 function LoginPage(props){
     const [emailInput, setEmail] = useState('');
     const [passwordInput, setPassword] = useState('');
-    const [loginStatus,setLoginStatus] = useState('');
-    const [allowLogin, setAllowLogin] = useState(false);
-    // const [isLoggedIn,setIsLoggedIn] = useState(false);
+    const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const {setLoggedIn} = useContext(LogginContext);
     const navigate = useNavigate();
+    const api = new API();
     
-    Axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/user/login').then((response)=> {
-            console.log(response);
+        api.checkLogin()
+        .then((response)=> {
             if(response.data.userLoggedIn === true){
-                setLoginStatus(response.data.user[0].First_Name);
-                setAllowLogin(true);
+                setLoggedIn(response.data.userLoggedIn);
                }
             })
-        //  
-      },[loginStatus])
-     function login(){
-        return Axios.post('http://localhost:3001/user/login',{
-          email: emailInput,
-          password: passwordInput,
-        })
-    }
+      },[])
+     
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      login().then((response) => {
+      api.login(emailInput, passwordInput).then((response) => {
         if (response.data.message){
-          setLoginStatus(response.data.message)
         } else {
-          setLoginStatus(response.data[0].email)
+          setLoggedIn(true);
           navigate('/user/account')
         }
-      });;
-
-
+      });
     };
 
-    
         return (
             <Container fluid>
             <Container fluid>
@@ -63,7 +48,7 @@ function LoginPage(props){
                     <Form noValidate>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control id='email' type="email" placeholder="Enter email" onChange = {(e) => {
+                        <Form.Control type="email" placeholder="Enter email" onChange = {(e) => {
                         setEmail(e.target.value);
                     }}/>
                     <Form.Text className="text-muted">
@@ -80,7 +65,6 @@ function LoginPage(props){
                         setPassword(e.target.value);
                     }}/>
                     </Form.Group>
-                    <h1>{loginStatus}</h1>
                     <Button variant="primary" type="submit" onClick={handleSubmit}>
                         Login
                     </Button>

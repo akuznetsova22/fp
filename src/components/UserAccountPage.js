@@ -1,102 +1,55 @@
 
-import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from 'react-bootstrap/Image'
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from 'react-bootstrap';
-import jsCookie from 'js-cookie';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useState,useEffect } from 'react';
-import Axios from 'axios';
+import UserInfo from './UserInfo.js';
+import { LogginContext } from "./LoginContext";
+import { useContext } from "react";
+import API from "../api/api.js";
 
 
 function UserAccountPage(props){
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const [firstName, setFirstName] = useState(jsCookie.get('firstName'));
-  const [lastName, setLastName] = useState(jsCookie.get('lastName'));
-  const [email, setEmail] = useState(jsCookie.get('email'));
-  const [address, setAddress] = useState(jsCookie.get('address'));
+  const [isLoaded,setIsLoaded] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
   const navigate = useNavigate();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const {setLoggedIn} = useContext(LogginContext);
 
   useEffect(() => {
-  //   checkLogin().then((response) => {
-  //     if (response.data.userLoggedIn){
-  //       console.log(response.data)
-  //       getSessionInfo();
-  //     } else {
-  //       navigate('/user/login');
-  //     }
-
-  // })
-  },[])
-
-  function logout(){
-    Axios.post('http://localhost:3001/user')
-    setIsLoggedIn(false);
-    navigate('/user/login');
-  }
-  function checkLogin(){
-    return Axios.get('http://localhost:3001/user/login')
-  }
+    getSessionInfo()  
+  },[]);
 
   function getSessionInfo(){
-    checkLogin().then((response) => {
-      console.log(response.data);
-      setFirstName(response.data.user[0].First_Name);
-      setLastName(response.data.user[0].Last_Name);
-      setEmail(response.data.user[0].Email);
-      setAddress(response.data.user[0].Address);
-      setIsLoggedIn(true)
-  })
+    const api = new API();
+    api.checkLogin().then((response) => {
+      if (response.data.userLoggedIn === true) {
+        setUserLoggedIn(true);
+      } else {
+        navigate('/user/login')
+      }
+    });
+    api.getUserDetails()
+    .then((response) => {
+      setFirstName(response.data[0].First_Name);
+      setLastName(response.data[0].Last_Name);
+      setEmail(response.data[0].Email);
+      setAddress(response.data[0].Address);
+      setIsLoaded(true);
+    })    
+    }
+    function logout(){
+      const api = new API();
+      api.logout()
+      setIsLoaded(false);
+      setLoggedIn(false);
+      navigate('/user/login');
+    }
+
+    return(
+      <UserInfo loading={isLoaded} logout={logout} firstName={firstName} lastName={lastName} email={email} address={address}></UserInfo>
+    )
 }
 
-  // if (!jsCookie.get('userLoggedIn')){
-  //   return <Navigate replace to ='/user/login'></Navigate>
-  //   } else {
-    checkLogin().then((response) => {
-      if (response.data.userLoggedIn){
-        console.log(response.data)
-        getSessionInfo();
-      } else {
-        navigate('/user/login');
-      }
-
-  })
-      return(
-        <Container fluid>
-        <Container fluid>
-          <h2>Welcome, fellow mealprepper!</h2>
-          <Row>
-          <Col>
-            <Image roundedCircle src={require('../images/userPic.png')} alt='user Picture'>
-            </Image>
-          </Col>
-          <Col>
-              <Card style={{ width: '18rem' }}>
-              <Card.Body>
-                <Card.Title>User details:</Card.Title>
-              </Card.Body>
-              <ListGroup className="list-group-flush">
-                <ListGroup.Item>First name: {firstName}</ListGroup.Item>
-                <ListGroup.Item>Last Name: {lastName}</ListGroup.Item>
-                <ListGroup.Item>Email: {email}</ListGroup.Item>
-                <ListGroup.Item>Address: {address}</ListGroup.Item>
-              </ListGroup>
-              <Card.Body>
-                <Button variant="outline-primary" type="submit">
-                  <Link to='/user/changedetails'>Update details </Link>
-                </Button>
-                <Button onClick={logout} variant="danger" type="submit">Logout
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-          </Row>
-        </Container>
-      </Container>
-   )}
-// }
 export default UserAccountPage;
