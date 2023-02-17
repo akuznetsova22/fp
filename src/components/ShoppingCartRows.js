@@ -16,6 +16,7 @@ function ShoppingCartRows (props){
     const navigate = useNavigate();
     const api = new API();
 
+
     
     function deleteRow(e){
         e.preventDefault();
@@ -42,6 +43,9 @@ function ShoppingCartRows (props){
     for (let i = 0; i < products.length; i++){
         productList.push(
         <Row>
+          <Col>Menu
+            <p>{products[i]}</p>
+          </Col>
             <Form noValidate validated={validated}>
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">

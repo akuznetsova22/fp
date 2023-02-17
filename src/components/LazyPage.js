@@ -101,7 +101,7 @@ function LazyPage(props){
             <Card.Title>Surprise Menu</Card.Title>
             <Card.Img variant="top" src={require('../images/surprise.webp')} />
             <Card.Text>
-                Feeling adventurous? Our chefs have prepared a surprise menu for you. Prepare to get your mind blows by our delicatesses.
+                Feeling adventurous? Our chefs have prepared a surprise menu for you. Prepare to get your mind blown by our delicatesses.
             </Card.Text>
             <ListGroup variant="flush">
                 <ListGroup.Item>$60 per day</ListGroup.Item>
